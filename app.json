@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "xcel-med-connect",
+    "name": "Xcel Med Connect",
     "slug": "xcel-med-connect",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "xcel-med-connect",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
