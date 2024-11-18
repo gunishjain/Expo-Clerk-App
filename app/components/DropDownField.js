@@ -1,34 +1,62 @@
 import React, { useState } from 'react';
-import { Menu, Button } from 'react-native-paper';
+import { StyleSheet, View } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 
-const DropdownField = ({ label, options, onSelect }) => {
-  const [visible, setVisible] = useState(false);
-  const [selected, setSelected] = useState('');
-
-  const openMenu = () => setVisible(true);
-  const closeMenu = () => setVisible(false);
-
-  const handleSelect = (option) => {
-    setSelected(option);
-    onSelect(option);
-    closeMenu();
-  };
+const DropDown = ({ 
+  placeholder, 
+  value, 
+  options, 
+  onSelect, 
+  containerStyle 
+}) => {
+  const [open, setOpen] = useState(false);
+  const [items, setItems] = useState(options);
 
   return (
-    <Menu
-      visible={visible}
-      onDismiss={closeMenu}
-      anchor={
-        <Button mode="outlined" onPress={openMenu}>
-          {selected || label}
-        </Button>
-      }
-    >
-      {options.map((option) => (
-        <Menu.Item key={option} onPress={() => handleSelect(option)} title={option} />
-      ))}
-    </Menu>
+    <View style={[styles.container, containerStyle]}>
+      <DropDownPicker
+        open={open}
+        value={value}
+        items={items}
+        setOpen={setOpen}
+        setValue={(val) => {
+          const selected = items.find(item => item.value === val());
+          if (selected) onSelect(selected);
+        }}
+        setItems={setItems}
+        placeholder={placeholder}
+        style={styles.dropdown}
+        dropDownContainerStyle={styles.dropDownContainer}
+        listItemContainerStyle={styles.listItemContainer}
+        textStyle={styles.textStyle}
+      />
+    </View>
   );
 };
 
-export default DropdownField;
+const styles = StyleSheet.create({
+  container: {
+    height: 50,
+  },
+  dropdown: {
+    borderWidth: 1,
+    borderColor: '#E8E8E8',
+    borderRadius: 8,
+    backgroundColor: '#F6F6F6',
+    minHeight: 50,
+  },
+  dropDownContainer: {
+    borderColor: '#E8E8E8',
+    borderRadius: 8,
+    backgroundColor: '#FFFFFF',
+  },
+  listItemContainer: {
+    height: 40,
+  },
+  textStyle: {
+    fontSize: 16,
+    color: '#333',
+  },
+});
+
+export default DropDown;

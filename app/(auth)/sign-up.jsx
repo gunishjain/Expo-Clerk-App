@@ -5,6 +5,10 @@ import { useRouter } from 'expo-router';
 import CustomInput from '../components/CustomInput';
 import ProgressStepper from '../components/ProgressStepper';
 import DatePickerField from '../components/DatePicker';
+import DropDown from '../components/DropDownField'
+import CountryCodePicker from '../components/CountryCodePicker';
+import countries from '../utils/countryCodes'
+
 
 const SignUp = () => {
 
@@ -21,6 +25,22 @@ const SignUp = () => {
     profession: '',
     termsAccepted: false,
   });
+
+  const [selectedCountry, setSelectedCountry] = useState(countries[0]); // Default to first country
+  const [showPassword, setShowPassword] = useState(false);
+
+  const genderOptions = [
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' },
+    { label: 'Other', value: 'other' },
+  ];
+
+  const professionOptions = [
+    { label: 'Doctor', value: 'doctor' },
+    { label: 'Nurse', value: 'nurse' },
+    { label: 'Pharmacist', value: 'pharmacist' },
+    { label: 'Other Healthcare Professional', value: 'other' },
+  ];
 
   const handleSubmit = () => {
     router.push('/auth/verify');
@@ -42,16 +62,15 @@ const SignUp = () => {
           onChangeText={(text) => setFormData({ ...formData, email: text })}
           keyboardType="email-address"
           autoCapitalize="none"
+          containerStyle={styles.fullWidthInput}
         />
         
-        <View style={styles.phoneInputContainer}>
-          <View style={styles.countryCode}>
-            <CustomInput
-              value="+1"
-              containerStyle={styles.countryCodeInput}
-              editable={false}
-            />
-          </View>
+        <View style={[styles.phoneInputContainer, styles.fullWidthInput]}>
+          <CountryCodePicker
+            value={selectedCountry}
+            onSelect={setSelectedCountry}
+            containerStyle={styles.countryCode}
+          />
           <View style={styles.phoneNumber}>
             <CustomInput
               placeholder="Phone Number"
@@ -66,15 +85,20 @@ const SignUp = () => {
           placeholder="Password"
           value={formData.password}
           onChangeText={(text) => setFormData({ ...formData, password: text })}
-          secureTextEntry
+          isPassword={true}
+          secureTextEntry={!showPassword}
+          containerStyle={styles.fullWidthInput}
           rightIcon={{ 
             type: 'feather', 
-            name: 'eye',
+            name: showPassword ? 'eye-off' : 'eye',
             color: '#999',
-            size: 20
+            size: 20,
+            onPress: () => setShowPassword(!showPassword)
           }}
         />
         
+
+      <View></View>
         <View style={styles.row}>
           <CustomInput
             placeholder="First Name"
@@ -92,12 +116,15 @@ const SignUp = () => {
         </View>
         
         <View style={styles.row}>
-          <CustomInput
-            placeholder="Gender"
-            value={formData.gender}
-            onChangeText={(text) => setFormData({ ...formData, gender: text })}
-            containerStyle={styles.halfInput}
-          />
+          <View style={[styles.halfInput, styles.dropdownWrapper]}>
+            <DropDown
+              placeholder="Gender"
+              value={formData.gender}
+              options={genderOptions}
+              onSelect={(item) => setFormData({ ...formData, gender: item.label })}
+              containerStyle={styles.dropdown}
+            />
+          </View>
           
           <CustomInput
             placeholder="Zipcode"
@@ -109,18 +136,20 @@ const SignUp = () => {
           />
         </View>
 
-        <DatePickerField label="Date of Birth (DD/MM/YYYY)" onDateChange={handleDateChange} />
         
-        <CustomInput
+      
+
+        <View style={{ marginBottom: 20 }}>
+          <DatePickerField label="Date of Birth (DD/MM/YYYY)" onDateChange={handleDateChange} />
+        </View>
+
+        
+        
+        <DropDown
           placeholder="Profession"
           value={formData.profession}
-          onChangeText={(text) => setFormData({ ...formData, profession: text })}
-          rightIcon={{ 
-            type: 'feather', 
-            name: 'chevron-down',
-            color: '#999',
-            size: 20
-          }}
+          options={professionOptions}
+          onSelect={(item) => setFormData({ ...formData, profession: item.label })}
         />
         
         <CheckBox
@@ -155,25 +184,27 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 10,
+    marginBottom: 16,
   },
   halfInput: {
     width: '48%',
+    height: 50,
   },
   phoneInputContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 10,
+    alignItems: 'center',
+    marginBottom: 16,
+    height: 50,
+    zIndex: 999,
   },
   countryCode: {
-    width: '25%',
+    width: '30%',
+    height: 50,
   },
   phoneNumber: {
-    width: '73%',
-  },
-  countryCodeInput: {
-    backgroundColor: '#f5f5f5',
-    borderRadius: 8,
+    width: '68%',
+    height: 50,
   },
   checkbox: {
     backgroundColor: 'transparent',
@@ -197,8 +228,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#4267B2',
     borderRadius: 8,
-    padding: 15,
-    height: 55,
+    height: 50,
   },
   termsText: {
     fontSize: 14,
@@ -209,6 +239,18 @@ const styles = StyleSheet.create({
   termsLink: {
     color: '#4267B2',
     textDecorationLine: 'underline',
+  },
+  fullWidthInput: {
+    height: 50,
+    marginBottom: 16,
+    width: '100%',
+  },
+  dropdownWrapper: {
+    zIndex: 1000,
+  },
+  dropdown: {
+    height: 50,
+    width: '100%',
   },
 });
 
