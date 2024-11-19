@@ -1,257 +1,200 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
-import { Button, CheckBox } from '@rneui/themed';
+import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
-import CustomInput from '../components/CustomInput';
-import ProgressStepper from '../components/ProgressStepper';
-import DatePickerField from '../components/DatePicker';
-import DropDown from '../components/DropDownField'
-import CountryCodePicker from '../components/CountryCodePicker';
-import countries from '../utils/countryCodes'
-
+import { useState } from 'react';
+import { Picker } from '@react-native-picker/picker';
+import { MaterialIcons } from '@expo/vector-icons';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import Checkbox from 'expo-checkbox';
 
 const SignUp = () => {
-
   const router = useRouter();
   const [formData, setFormData] = useState({
-    email: '',
-    phone: '',
-    password: '',
-    firstName: '',
-    lastName: '',
-    gender: '',
-    zipcode: '',
-    dob: '',
-    profession: '',
+    email: "",
+    phone: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    gender: "",
+    zipcode: "",
+    dob: "",
+    profession: "",
     termsAccepted: false,
+    countryCode: "+91",
   });
 
-  const [selectedCountry, setSelectedCountry] = useState(countries[0]); // Default to first country
   const [showPassword, setShowPassword] = useState(false);
+  const [selectedCountryCode, setSelectedCountryCode] = useState("+1");
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const genderOptions = [
-    { label: 'Male', value: 'male' },
-    { label: 'Female', value: 'female' },
-    { label: 'Other', value: 'other' },
+    { label: "Select Gender", value: "" },
+    { label: "Male", value: "male" },
+    { label: "Female", value: "female" },
+    { label: "Other", value: "other" },
   ];
 
   const professionOptions = [
-    { label: 'Doctor', value: 'doctor' },
-    { label: 'Nurse', value: 'nurse' },
-    { label: 'Pharmacist', value: 'pharmacist' },
-    { label: 'Other Healthcare Professional', value: 'other' },
+    { label: "Select Profession", value: "" },
+    { label: "Doctor", value: "doctor" },
+    { label: "Nurse", value: "nurse" },
+    { label: "Pharmacist", value: "pharmacist" },
+    { label: "Other Healthcare Professional", value: "other" },
   ];
 
-  const handleSubmit = () => {
-    router.push('/auth/verify');
-  };
-
-  const handleDateChange = (date) => {
-    console.log('Selected date:', date);
-    setFormData({ ...formData, dob: date });
-  };
-
   return (
-    <ScrollView style={styles.scrollView}>
-      <View style={styles.container}>
-        <ProgressStepper currentStep={1} />
-        
-        <CustomInput
+    <ScrollView className="flex-1 bg-white">
+      <View className="px-4 py-8">
+        {/* Email */}
+        <TextInput
+          className="w-full h-12 px-4 bg-gray-100 rounded-lg mb-6"
           placeholder="Email"
           value={formData.email}
           onChangeText={(text) => setFormData({ ...formData, email: text })}
           keyboardType="email-address"
-          autoCapitalize="none"
-          containerStyle={styles.fullWidthInput}
         />
-        
-        <View style={[styles.phoneInputContainer, styles.fullWidthInput]}>
-          <CountryCodePicker
-            value={selectedCountry}
-            onSelect={setSelectedCountry}
-            containerStyle={styles.countryCode}
-          />
-          <View style={styles.phoneNumber}>
-            <CustomInput
-              placeholder="Phone Number"
-              value={formData.phone}
-              onChangeText={(text) => setFormData({ ...formData, phone: text })}
-              keyboardType="phone-pad"
-            />
-          </View>
-        </View>
-        
-        <CustomInput
-          placeholder="Password"
-          value={formData.password}
-          onChangeText={(text) => setFormData({ ...formData, password: text })}
-          isPassword={true}
-          secureTextEntry={!showPassword}
-          containerStyle={styles.fullWidthInput}
-          rightIcon={{ 
-            type: 'feather', 
-            name: showPassword ? 'eye-off' : 'eye',
-            color: '#999',
-            size: 20,
-            onPress: () => setShowPassword(!showPassword)
-          }}
-        />
-        
 
-      <View></View>
-        <View style={styles.row}>
-          <CustomInput
+        {/* Phone Number */}
+        <View className="flex-row space-x-2 mb-6">
+          <View className="w-20">
+            <View className="h-12 bg-gray-100 rounded-lg justify-center overflow-hidden">
+              <Picker
+                selectedValue={selectedCountryCode}
+                onValueChange={(itemValue) => setSelectedCountryCode(itemValue)}
+                className="h-12 -mt-3"
+              >
+                <Picker.Item label="🇺🇸 +1" value="+1" />
+                <Picker.Item label="🇮🇳 +91" value="+91" />
+                <Picker.Item label="🇬🇧 +44" value="+44" />
+                <Picker.Item label="🇦🇺 +61" value="+61" />
+                <Picker.Item label="🇨🇦 +1" value="+1" />
+              </Picker>
+            </View>
+          </View>
+          <TextInput
+            className="flex-1 h-12 px-4 bg-gray-100 rounded-lg"
+            placeholder="Phone Number"
+            value={formData.phone}
+            onChangeText={(text) => setFormData({ ...formData, phone: text })}
+            keyboardType="phone-pad"
+          />
+        </View>
+
+        {/* Password */}
+        <View className="relative">
+          <TextInput
+            className="w-full h-12 px-4 bg-gray-100 rounded-lg"
+            placeholder="Password"
+            value={formData.password}
+            onChangeText={(text) => setFormData({ ...formData, password: text })}
+            secureTextEntry={!showPassword}
+          />
+          <TouchableOpacity 
+            className="absolute right-4 top-3"
+            onPress={() => setShowPassword(!showPassword)}
+          >
+            <MaterialIcons 
+              name={showPassword ? "visibility" : "visibility-off"} 
+              size={24} 
+              color="gray" 
+            />
+          </TouchableOpacity>
+        </View>
+
+        {/* Name Fields */}
+        <View className="flex-row space-x-2">
+          <TextInput
+            className="flex-1 h-12 px-4 bg-gray-100 rounded-lg"
             placeholder="First Name"
             value={formData.firstName}
             onChangeText={(text) => setFormData({ ...formData, firstName: text })}
-            containerStyle={styles.halfInput}
           />
-          
-          <CustomInput
+          <TextInput
+            className="flex-1 h-12 px-4 bg-gray-100 rounded-lg"
             placeholder="Last Name"
             value={formData.lastName}
             onChangeText={(text) => setFormData({ ...formData, lastName: text })}
-            containerStyle={styles.halfInput}
           />
         </View>
-        
-        <View style={styles.row}>
-          <View style={[styles.halfInput, styles.dropdownWrapper]}>
-            <DropDown
-              placeholder="Gender"
-              value={formData.gender}
-              options={genderOptions}
-              onSelect={(item) => setFormData({ ...formData, gender: item.label })}
-              containerStyle={styles.dropdown}
-            />
+
+        {/* Gender and Zipcode */}
+        <View className="flex-row space-x-2">
+          <View className="flex-1">
+            <TouchableOpacity 
+              className="h-12 bg-gray-100 rounded-lg px-4 justify-center"
+            >
+              <Text className="text-gray-500">Gender</Text>
+            </TouchableOpacity>
           </View>
-          
-          <CustomInput
+          <TextInput
+            className="flex-1 h-12 px-4 bg-gray-100 rounded-lg"
             placeholder="Zipcode"
             value={formData.zipcode}
             onChangeText={(text) => setFormData({ ...formData, zipcode: text })}
-            containerStyle={styles.halfInput}
             keyboardType="numeric"
-            maxLength={6}
           />
         </View>
 
+        {/* Date of Birth */}
+        <TouchableOpacity 
+          className="w-full h-12 px-4 bg-gray-100 rounded-lg justify-center"
+          onPress={() => setShowDatePicker(true)}
+        >
+          <Text className="text-gray-500">
+            {formData.dob || "Date of Birth (DD/MM/YYYY)"}
+          </Text>
+        </TouchableOpacity>
         
-      
+        {showDatePicker && (
+          <DateTimePicker
+            value={new Date()}
+            mode="date"
+            onChange={(event, selectedDate) => {
+              setShowDatePicker(false);
+              if (selectedDate) {
+                setFormData({ 
+                  ...formData, 
+                  dob: selectedDate.toLocaleDateString() 
+                });
+              }
+            }}
+          />
+        )}
 
-        <View style={{ marginBottom: 20 }}>
-          <DatePickerField label="Date of Birth (DD/MM/YYYY)" onDateChange={handleDateChange} />
+        {/* Profession */}
+        <TouchableOpacity 
+          className="w-full h-12 px-4 bg-gray-100 rounded-lg justify-center"
+        >
+          <Text className="text-gray-500">Profession</Text>
+        </TouchableOpacity>
+
+        {/* Terms and Conditions */}
+        <View className="flex-row items-start space-x-2 mt-4">
+          <Checkbox
+            value={formData.termsAccepted}
+            onValueChange={(value) => 
+              setFormData({ ...formData, termsAccepted: value })
+            }
+            color={formData.termsAccepted ? '#2563eb' : undefined}
+          />
+          <Text className="flex-1 text-sm text-gray-600">
+            By checking this box, you are confirming that you have read and agree to our{' '}
+            <Text className="text-blue-600 underline">Terms of Use</Text>,{' '}
+            <Text className="text-blue-600 underline">Privacy Policy</Text>
+          </Text>
         </View>
 
-        
-        
-        <DropDown
-          placeholder="Profession"
-          value={formData.profession}
-          options={professionOptions}
-          onSelect={(item) => setFormData({ ...formData, profession: item.label })}
-        />
-        
-        <CheckBox
-          title="By checking this box, you are confirming that you have read and agree to our Terms of Use, Privacy Policy"
-          checked={formData.termsAccepted}
-          onPress={() => setFormData({ ...formData, termsAccepted: !formData.termsAccepted })}
-          containerStyle={styles.checkbox}
-          textStyle={styles.checkboxText}
-        />
-        
-        <Button
-          title="Register"
-          onPress={handleSubmit}
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.button}
-        />
+        {/* Register Button */}
+        <TouchableOpacity 
+          className="w-full h-12 bg-blue-600 rounded-lg items-center justify-center mt-6"
+          onPress={() => {
+            // Handle registration
+          }}
+        >
+          <Text className="text-white font-semibold">Register</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  scrollView: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#fff',
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 16,
-  },
-  halfInput: {
-    width: '48%',
-    height: 50,
-  },
-  phoneInputContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-    height: 50,
-    zIndex: 999,
-  },
-  countryCode: {
-    width: '30%',
-    height: 50,
-  },
-  phoneNumber: {
-    width: '68%',
-    height: 50,
-  },
-  checkbox: {
-    backgroundColor: 'transparent',
-    borderWidth: 0,
-    marginLeft: 0,
-    marginRight: 0,
-    marginTop: 15,
-    marginBottom: 15,
-    padding: 0,
-  },
-  checkboxText: {
-    fontWeight: 'normal',
-    fontSize: 14,
-    marginLeft: 10,
-    color: '#666',
-  },
-  buttonContainer: {
-    marginTop: 10,
-    marginBottom: 30,
-  },
-  button: {
-    backgroundColor: '#4267B2',
-    borderRadius: 8,
-    height: 50,
-  },
-  termsText: {
-    fontSize: 14,
-    color: '#666',
-    marginTop: 15,
-    marginBottom: 15,
-  },
-  termsLink: {
-    color: '#4267B2',
-    textDecorationLine: 'underline',
-  },
-  fullWidthInput: {
-    height: 50,
-    marginBottom: 16,
-    width: '100%',
-  },
-  dropdownWrapper: {
-    zIndex: 1000,
-  },
-  dropdown: {
-    height: 50,
-    width: '100%',
-  },
-});
-
-export default SignUp
+export default SignUp;

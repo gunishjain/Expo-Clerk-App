@@ -1,5 +1,7 @@
 import { SplashScreen , Stack} from 'expo-router'
 import React from 'react'
+import "../global.css";
+
 
 
 // SplashScreen.preventAutoHideAsync();
