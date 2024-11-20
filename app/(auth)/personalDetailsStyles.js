@@ -33,16 +33,6 @@ export const styles = StyleSheet.create({
     marginBottom: 16,
   },
 
-  countryCodePicker: {
-    backgroundColor: "#dcdcdc",
-    borderRadius: 8,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 10,
-    marginRight: 8, 
-
-  },
-  
   phonenumber: {
     backgroundColor: "#dcdcdc",
     height: 40,
@@ -79,12 +69,17 @@ export const styles = StyleSheet.create({
   },
 
   genderPicker: {
-    backgroundColor: "#dcdcdc",
-    borderRadius: 8,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 10,
-    marginRight: 8, 
+
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    
+    padding:10,
+    flex: 1,  
+      backgroundColor: "#dcdcdc",
+      height: 40,
+      borderRadius: 8,
+  
 
   },
 
@@ -97,6 +92,11 @@ export const styles = StyleSheet.create({
   },
 
   professionPicker: {
+
+
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
 
     backgroundColor: "#dcdcdc",
     height: 40,
@@ -140,4 +140,71 @@ export const styles = StyleSheet.create({
     height: 50,
     borderRadius: 8,
   },
+
+  countryCodePicker: {
+
+    backgroundColor: "#dcdcdc",
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 10,
+    marginRight: 8, 
+
+  },
+
+  dropdownCountry: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: "#dcdcdc",
+    borderRadius: 8,
+    height: 40,
+    paddingHorizontal: 10,
+    marginRight: 8, 
+  },
+  dropdownButtonTxtStyle: {
+    fontSize: 16,
+  },
+  dropdownButtonArrowStyle: {
+    fontSize: 18,
+    color: '#888',
+  },
+  dropdownMenuStyle: {
+    borderRadius: 5,
+    backgroundColor: '#fff',
+  },
+  dropdownItemStyle: {
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  dropdownItemTxtStyle: {
+    fontSize: 16,
+  },
+
+
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: "#dcdcdc",
+    height: 40,
+    padding: 10,
+    borderRadius: 8,
+    marginBottom: 16,
+  
+  },
+  inputPassField: {
+    flex: 1,
+    fontSize: 16,
+    paddingHorizontal: 10,
+    
+  },
+  iconContainer: {
+    
+  },
+
+
+
+
+
 });

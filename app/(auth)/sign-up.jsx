@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Platform, ScrollView , TextInput} from "react-native";
+import { View, StyleSheet, Platform, ScrollView , TextInput, TouchableOpacity} from "react-native";
 import { Button, CheckBox } from "@rneui/themed";
 import { useRouter } from "expo-router";
 import { Text } from "react-native";
@@ -7,6 +7,9 @@ import DatePickerField from "../components/DatePicker";
 import { styles } from "./personalDetailsStyles";
 import countries from "../utils/countryCodes";
 import { Picker } from "@react-native-picker/picker";
+import SelectDropdown from 'react-native-select-dropdown'
+import { Ionicons } from '@expo/vector-icons'; // Or use another icon library of your choice
+
 
 const SignUp = () => {
   const router = useRouter();
@@ -24,11 +27,10 @@ const SignUp = () => {
     countryCode: "+91",
   });
 
-  const [showPassword, setShowPassword] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [selectedCountryCode, setSelectedCountryCode] = useState();
 
   const genderOptions = [
-    { label: "Select Gender", value: "" },
     { label: "Male", value: "male" },
     { label: "Female", value: "female" },
     { label: "Other", value: "other" },
@@ -56,23 +58,42 @@ const SignUp = () => {
 
         <View style={styles.phoneContainer}>
 
-          <View style={styles.countryCodePicker}>
-            <Picker
-             selectedValue={selectedCountryCode}
-             onValueChange={(itemValue) => setSelectedCountryCode(itemValue)}
-              style={{ height: 40, width: 40, fontSize: 12 }}
-              >
-                <Picker.Item label="Select" value="" />
-                      {countries.map((country) => (
-                        <Picker.Item
-                          key={country.code}
-                          label={`${country.flag} ${country.dial_code}`}
-                          value={country.dial_code}
-                        />
-                      ))}
-          </Picker>
-          </View>
-          
+            <SelectDropdown
+              data={countries}
+              onSelect={(selectedItem, index) => {
+                console.log(selectedItem, index);
+              }}
+              renderButton={(selectedItem, isOpen) => {
+                return (
+                  <View style={styles.dropdownCountry}>
+                    <Text style={styles.dropdownButtonTxtStyle}>
+                      {selectedItem
+                        ? `${selectedItem.flag} ${selectedItem.dial_code}`
+                        : 'Select'}
+                    </Text>
+                    <Text style={styles.dropdownButtonArrowStyle}>
+                      {isOpen ? '▲' : '▼'}
+                    </Text>
+                  </View>
+                );
+              }}
+              renderItem={(item, index, isSelected) => {
+                return (
+                  <View
+                    style={{
+                      ...styles.dropdownItemStyle,
+                      ...(isSelected && { backgroundColor: '#D2D9DF' }),
+                    }}
+                  >
+                    <Text style={styles.dropdownItemTxtStyle}>
+                      {`${item.flag} ${item.dial_code}`}
+                    </Text>
+                  </View>
+                );
+              }}
+              showsVerticalScrollIndicator={false}
+              dropdownStyle={styles.dropdownMenuStyle}
+            />
 
           <TextInput
             placeholder="Phone Number"
@@ -85,13 +106,36 @@ const SignUp = () => {
 
         </View>
 
-        <TextInput
+        {/* <TextInput
           placeholder="Password"
           value={formData.password}
           onChangeText={(text) => setFormData({ ...formData, password: text })}
           keyboardType="text"
           style={styles.inputTextField}
-        />
+        /> */}
+
+            <View style={styles.inputContainer}>
+                  <TextInput
+                    placeholder="Password"
+                    value={formData.password}
+                    onChangeText={(text) => setFormData({ ...formData, password: text })}
+                    secureTextEntry={!isPasswordVisible}
+                    style={styles.inputPassField}
+                  />
+                  <TouchableOpacity
+                    onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+                    style={styles.iconContainer}
+                  >
+                    <Ionicons
+                      name={isPasswordVisible ? 'eye' : 'eye-off'}
+                      size={24}
+                      color="gray"
+                    />
+                  </TouchableOpacity>
+                </View>
+
+
+
 
         <View style={styles.flRow}>
           
@@ -117,24 +161,40 @@ const SignUp = () => {
 
         <View style={styles.flRow}>
 
-
-          <View style={styles.firstName}>
-                <Picker
-                  selectedValue={formData.gender}
-                  onValueChange={(itemValue) =>
-                    setFormData({ ...formData, gender: itemValue })
-                  }
-                  
-                >
-                  {genderOptions.map((option) => (
-                    <Picker.Item
-                      key={option.value}
-                      label={option.label}
-                      value={option.value}
-                    />
-                  ))}
-                </Picker>
-          </View>
+                    <SelectDropdown
+                        data={genderOptions}
+                        onSelect={(selectedItem, index) => {
+                          console.log(selectedItem, index);
+                        }}
+                        renderButton={(selectedItem, isOpen) => {
+                          return (
+                            <View style={styles.genderPicker}>
+                              <Text style={styles.dropdownButtonTxtStyle}>
+                              {selectedItem ? selectedItem.label : 'Select Gender'}
+                              </Text>
+                              <Text style={styles.dropdownButtonArrowStyle}>
+                                {isOpen ? '▲' : '▼'}
+                              </Text>
+                            </View>
+                          );
+                        }}
+                        renderItem={(item, index, isSelected) => {
+                          return (
+                            <View
+                              style={{
+                                ...styles.dropdownItemStyle,
+                                ...(isSelected && { backgroundColor: '#D2D9DF' }),
+                              }}
+                            >
+                              <Text style={styles.dropdownItemTxtStyle}>
+                              {item.label}
+                              </Text>
+                            </View>
+                          );
+                        }}
+                        showsVerticalScrollIndicator={false}
+                        dropdownStyle={styles.dropdownMenuStyle}
+                      />
 
           <TextInput
             placeholder="Zipcode"
@@ -155,7 +215,7 @@ const SignUp = () => {
           }}
         />
 
-        <View style={styles.professionPicker}>
+        {/* <View style={styles.professionPicker}>
           <Picker
             selectedValue={formData.profession}
             onValueChange={(itemValue) =>
@@ -171,7 +231,42 @@ const SignUp = () => {
               />
             ))}
           </Picker>
-        </View>
+        </View> */}
+
+                    <SelectDropdown
+                        data={professionOptions}
+                        onSelect={(selectedItem, index) => {
+                          console.log(selectedItem, index);
+                        }}
+                        renderButton={(selectedItem, isOpen) => {
+                          return (
+                            <View style={styles.genderPicker}>
+                              <Text style={styles.dropdownButtonTxtStyle}>
+                              {selectedItem ? selectedItem.label : 'Select Profession'}
+                              </Text>
+                              <Text style={styles.dropdownButtonArrowStyle}>
+                                {isOpen ? '▲' : '▼'}
+                              </Text>
+                            </View>
+                          );
+                        }}
+                        renderItem={(item, index, isSelected) => {
+                          return (
+                            <View
+                              style={{
+                                ...styles.dropdownItemStyle,
+                                ...(isSelected && { backgroundColor: '#D2D9DF' }),
+                              }}
+                            >
+                              <Text style={styles.dropdownItemTxtStyle}>
+                              {item.label}
+                              </Text>
+                            </View>
+                          );
+                        }}
+                        showsVerticalScrollIndicator={false}
+                        dropdownStyle={styles.dropdownMenuStyle}
+                      />
 
         <View style={styles.toc}>
 
