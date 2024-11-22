@@ -118,7 +118,6 @@ const styles = StyleSheet.create({
     color: '#9CA3AF',
   },
   connector: {
-    
     height: 4,
     width: 20,
     marginHorizontal: 8,

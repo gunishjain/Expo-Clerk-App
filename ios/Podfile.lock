@@ -9,6 +9,8 @@ PODS:
     - ExpoModulesCore
   - ExpoBlur (14.0.1):
     - ExpoModulesCore
+  - ExpoDocumentPicker (13.0.1):
+    - ExpoModulesCore
   - ExpoFileSystem (18.0.3):
     - ExpoModulesCore
   - ExpoFont (13.0.1):
@@ -1729,6 +1731,7 @@ DEPENDENCIES:
   - Expo (from `../node_modules/expo`)
   - ExpoAsset (from `../node_modules/expo-asset/ios`)
   - ExpoBlur (from `../node_modules/expo-blur/ios`)
+  - ExpoDocumentPicker (from `../node_modules/expo-document-picker/ios`)
   - ExpoFileSystem (from `../node_modules/expo-file-system/ios`)
   - ExpoFont (from `../node_modules/expo-font/ios`)
   - ExpoHaptics (from `../node_modules/expo-haptics/ios`)
@@ -1829,6 +1832,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-asset/ios"
   ExpoBlur:
     :path: "../node_modules/expo-blur/ios"
+  ExpoDocumentPicker:
+    :path: "../node_modules/expo-document-picker/ios"
   ExpoFileSystem:
     :path: "../node_modules/expo-file-system/ios"
   ExpoFont:
@@ -1998,6 +2003,7 @@ SPEC CHECKSUMS:
   Expo: 46cbe74ce0d0f4a4d7b726e90693eb8dfcec6de0
   ExpoAsset: 8138f2a9ec55ae1ad7c3871448379f7d97692d15
   ExpoBlur: 562b3da84d3cd79016c411671eaf71a404266415
+  ExpoDocumentPicker: 4a89fd8a0cb90010214a416c858d7dece1c1eb10
   ExpoFileSystem: cc31b7a48031ab565f9eb5c2b61aa08d774a271a
   ExpoFont: 7522d869d84ee2ee8093ee997fef5b86f85d856b
   ExpoHaptics: e636188d1d5f7ccb79f3c1bfab47aaf5a1768c73
