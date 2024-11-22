@@ -1,17 +1,16 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Platform, ScrollView , TextInput, TouchableOpacity} from "react-native";
+import { View,ScrollView , TextInput, TouchableOpacity} from "react-native";
 import { Button, CheckBox } from "@rneui/themed";
 import { useRouter } from "expo-router";
 import { Text } from "react-native";
 import DatePickerField from "../components/DatePicker";
-import { styles } from "./personalDetailsStyles";
+import { styles } from "./styles/personalDetailsStyles";
 import countries from "../utils/countryCodes";
-import { Picker } from "@react-native-picker/picker";
 import SelectDropdown from 'react-native-select-dropdown'
 import { Ionicons } from '@expo/vector-icons'; // Or use another icon library of your choice
 
 
-const SignUp = () => {
+const PersonalDetails = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
@@ -289,7 +288,7 @@ const SignUp = () => {
 
         <Button
               title="Register"
-              onPress={() => router.push("/auth/verify")}
+              onPress={() => router.push("auth/verify")}
               containerStyle={styles.buttonContainer}
               buttonStyle={styles.button}
             />
@@ -300,4 +299,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default PersonalDetails;

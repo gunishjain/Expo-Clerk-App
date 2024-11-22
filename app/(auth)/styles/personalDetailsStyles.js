@@ -14,7 +14,9 @@ export const styles = StyleSheet.create({
  
   formContainer: {
     padding: 15,
-    margin: 10,
+    marginTop: 0,
+    marginHorizontal: 10,
+    marginBottom: 0,
   },
 
   //email
@@ -147,7 +149,7 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 10,
+    paddingHorizontal: 10,   
     marginRight: 8, 
 
   },
