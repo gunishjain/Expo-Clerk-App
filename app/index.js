@@ -9,7 +9,7 @@ export default function App() {
     <View style={styles.container}>
       <Text variant="displayLarge">Xcel Med Connect</Text>
       <StatusBar style='auto'/>
-      <Link href="/professional-details" style={{color: 'blue'}}>Go To Register</Link>
+      <Link href="/personal-details" style={{color: 'blue'}}>Go To Register</Link>
     </View>
   )
 }

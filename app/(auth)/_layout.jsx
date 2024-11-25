@@ -1,15 +1,17 @@
 import { View, Text } from 'react-native'
-import { Stack } from 'expo-router'
-import Stepper from 'react-native-stepper-view';
+import { Stack,usePathname } from 'expo-router'
 
 import React from 'react'
 import AuthStepper from '../components/AuthStepper';
 
 
 const AuthLayout = () => {
+
+  const pathname = usePathname();
+  const isLoginScreen = pathname === '/login';
   return (
     <>
-    <AuthStepper/>
+    {!isLoginScreen && <AuthStepper/>}
     <Stack>
 
         <Stack.Screen
@@ -30,7 +32,14 @@ const AuthLayout = () => {
                 headerShown: false
             }}
           />
-            
+
+          <Stack.Screen
+            name="login"
+            options={{
+                headerShown: false
+            }}
+          />
+       
     </Stack>
     
     </>

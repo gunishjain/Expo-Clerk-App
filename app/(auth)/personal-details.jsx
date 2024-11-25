@@ -288,7 +288,7 @@ const PersonalDetails = () => {
 
         <Button
               title="Register"
-              onPress={() => router.push("auth/verify")}
+              onPress={() => router.push("verify")}
               containerStyle={styles.buttonContainer}
               buttonStyle={styles.button}
             />

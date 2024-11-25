@@ -48,7 +48,7 @@ const ProfessionalDetails = () => {
 
           <Button
             title="Back"
-            onPress={() => router.push("/auth/verify")}
+            onPress={() => router.back()}
             containerStyle={styles.buttonContainer}
             buttonStyle={styles.button}
             titleStyle={styles.buttonTitle}
@@ -56,7 +56,7 @@ const ProfessionalDetails = () => {
 
           <Button
             title="Save"
-            onPress={() => router.push("/auth/verify")}
+            onPress={() => router.push("login")}
             containerStyle={styles.buttonContainer}
             buttonStyle={styles.button}
             titleStyle={styles.buttonTitle}

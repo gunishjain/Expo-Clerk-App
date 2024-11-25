@@ -51,7 +51,7 @@ const Verify = () => {
 
                 <Button
                   title="Back"
-                  onPress={() => router.push("/auth/verify")}
+                  onPress={() => router.back()}
                   containerStyle={styles.buttonContainer}
                   buttonStyle={styles.button}
                   titleStyle={styles.buttonTitle}
@@ -59,7 +59,7 @@ const Verify = () => {
 
                 <Button
                   title="Verify"
-                  onPress={() => router.push("/auth/verify")}
+                  onPress={() => router.push("professional-details")}
                   containerStyle={styles.buttonContainer}
                   buttonStyle={styles.button}
                   titleStyle={styles.buttonTitle}
