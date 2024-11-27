@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 
-const DocumentPickerComponent = () => {
+const DocumentPickerComponent = ({onFileSelect,identifier}) => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const pickDocument = async () => {
@@ -10,7 +10,8 @@ const DocumentPickerComponent = () => {
       const result = await DocumentPicker.getDocumentAsync({});
       if (result.type === "success") {
         setSelectedFile(result);
-        console.log("Selected file:", result);
+        onFileSelect(result, identifier);
+        console.log(`Selected file for ${identifier}:`, result);
       }
     } catch (error) {
       console.error("Error picking document:", error);

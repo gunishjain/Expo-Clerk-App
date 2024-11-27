@@ -1,6 +1,6 @@
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet } from "react-native";
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     padding: "20px 30px",
     backgroundColor: "#fff",
@@ -205,8 +205,17 @@ export const styles = StyleSheet.create({
     
   },
 
-
-
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    marginLeft: 10,
+    marginTop: -15,
+    marginBottom: 10,
+  },
 
 
 });
+
+
+export default styles;
+

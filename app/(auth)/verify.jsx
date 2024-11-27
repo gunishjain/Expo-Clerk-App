@@ -1,30 +1,86 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity} from "react-native";
 import { Button } from "@rneui/themed";
-import { useRouter } from "expo-router";
-import { styles } from "./styles/verifyStyles";
+import { useRouter,useLocalSearchParams } from "expo-router";
+import styles from "./styles/verifyStyles";
+import { useSignUp } from "@clerk/clerk-expo";
+import Spinner from 'react-native-loading-spinner-overlay';
+
+
 
 
 const Verify = () => {
+  const { email, phone } = useLocalSearchParams();
+
+  console.log('Email:', email); 
+  console.log('Phone:', phone); 
+
+
   const router = useRouter();
   const [formData, setFormData] = useState({
     emailOTP: "",
     phoneOTP: "",
   });
 
+  const { isLoaded, signUp, setActive } = useSignUp();
+  const [loading, setLoading] = useState(false);
+
+  const resendEmailCode = async () => {
+    if (!isLoaded) return;
+    
+    try {
+      setLoading(true);
+      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+      alert("Verification code resent successfully!");
+    } catch (err) {
+      alert(err.errors[0].message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+
+  const verifyEmail = async (data) => {
+
+      if(!isLoaded){
+        return;
+      }
+
+      // setLoading(true);
+
+          try {
+
+            const completSignUp = await signUp.attemptEmailAddressVerification({
+               code: data.emailOTP,
+            });
+
+            await setActive({ session: completSignUp.createdSessionId });
+          } catch (err) {
+            alert(err.errors[0].message)
+          } finally {
+            // setLoading(false);
+          }
+
+  }
+  
+
 
 
   return (
     <View style={styles.container}>
 
+      <Spinner visible={loading} />
+  
+
       <View style={styles.formContainer}>
 
       <Text style={styles.message}>
         We’ve sent an OTP to your email (
-        <Text style={styles.boldText}>johndoe@gmail.com</Text>) and phone (
-        <Text style={styles.boldText}>+91949529632</Text>). Please enter the OTP below to verify your account.
+        <Text style={styles.boldText}>{email}</Text>) and phone (
+        <Text style={styles.boldText}>{phone}</Text>). Please enter the OTP below to verify your account.
       </Text>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={resendEmailCode}>
         <Text style={styles.resendLink}>Didn’t receive the code? Resend</Text>
       </TouchableOpacity>
 
@@ -59,7 +115,7 @@ const Verify = () => {
 
                 <Button
                   title="Verify"
-                  onPress={() => router.push("professional-details")}
+                  onPress={() => verifyEmail(formData)}
                   containerStyle={styles.buttonContainer}
                   buttonStyle={styles.button}
                   titleStyle={styles.buttonTitle}

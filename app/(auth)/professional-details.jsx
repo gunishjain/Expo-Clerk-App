@@ -3,13 +3,26 @@ import { View,ScrollView , TextInput, TouchableOpacity} from "react-native";
 import { Button } from "@rneui/themed";
 import { useRouter } from "expo-router";
 import { Text } from "react-native";
-import { styles } from "./styles/professionalDetailsStyles";
+import  styles  from "./styles/professionalDetailsStyles";
 import DocumentPickerComponent from '../components/DocumentPicker'
 
 
 
 const ProfessionalDetails = () => {
   const router = useRouter();
+  const [documents, setDocuments] = useState({
+    resume: null,
+    certificate: null
+  });
+
+  const handleFileSelect = (file, identifier) => {
+    setDocuments(prev => ({
+      ...prev,
+      [identifier]: file
+    }));
+    console.log(`File received for ${identifier}:`, file);
+  };
+
 
  
 
@@ -30,13 +43,17 @@ const ProfessionalDetails = () => {
         Upload Your Medical license/certificate
       </Text>
 
-      <DocumentPickerComponent/>
+      <DocumentPickerComponent onFileSelect={handleFileSelect}
+        identifier="resume"
+      />
 
       <Text style={styles.message}>
         Upload Your personal ID (Optional)
       </Text>
 
-      <DocumentPickerComponent/>
+      <DocumentPickerComponent 
+        onFileSelect={handleFileSelect}
+        identifier="certificate"/>
 
       <Text style={styles.message}>
       This is an optional step. If you prefer to not upload your personal ID, our representative will reach out to you for verification. 
