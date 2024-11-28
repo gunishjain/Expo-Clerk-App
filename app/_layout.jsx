@@ -11,7 +11,7 @@ const publishableKey = "pk_test_c2VsZWN0LXN3aWZ0LTQyLmNsZXJrLmFjY291bnRzLmRldiQ"
 
 
 const tokenCache = {
-  async getToken(key: string) {
+  async getToken(key) {
     try {
       const item = await SecureStore.getItemAsync(key)
       if (item) {
@@ -26,7 +26,7 @@ const tokenCache = {
       return null
     }
   },
-  async saveToken(key: string, value: string) {
+  async saveToken(key, value) {
     try {
       return SecureStore.setItemAsync(key, value)
     } catch (err) {
@@ -46,14 +46,25 @@ const InitialLayout = () => {
 
     const inAuthGroup = segments[0] === '(auth)';
     const inPublicGroup = segments[0] === '(public)';
+    const isVerifyPage = segments.includes('verify');
+    const isProfessionalDetailsPage = segments.includes('professional-details');
+    const isHomePage = segments.includes('home');
 
-    console.log('Auth state:', { isSignedIn, inAuthGroup, inPublicGroup }); // Add logging
+    console.log('Auth state:', { isSignedIn, inAuthGroup, inPublicGroup, isVerifyPage, segments });
 
-    if (isSignedIn && inAuthGroup) {
-      router.replace('/(public)/home');
-    } else if (!isSignedIn && !inAuthGroup && segments[0] !== 'register') {
-      // Only redirect to login if not on register page and not in auth group
-      router.replace('/login');
+    if (isSignedIn) {
+      if (isVerifyPage) {
+        // After verification, route to professional details
+        router.replace('/(auth)/professional-details');
+      } else if (!isProfessionalDetailsPage && !inPublicGroup && !isHomePage) {
+        // Only route to professional-details if not already there, not in public group, and not on home page
+        router.replace('/(auth)/professional-details');
+      }
+    } else {
+      // If not signed in and not already in login/register
+      if (!inAuthGroup && segments[0] !== 'register') {
+        router.replace('/login');
+      }
     }
   }, [isSignedIn, isLoaded, segments]);
 

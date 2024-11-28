@@ -49,7 +49,10 @@ const AuthStepper = () => {
             {index < steps.length - 1 && (
               <View style={[
                 styles.connector,
-                index + 1 < currentStep ? styles.activeConnector : styles.inactiveConnector
+                index === 0 ? styles.firstConnector : styles.secondConnector,
+                index + 1 < currentStep && styles.completedConnector,
+                index + 1 === currentStep && styles.activeConnector,
+                index + 1 > currentStep && styles.inactiveConnector
               ]} />
             )}
           </React.Fragment>
@@ -61,8 +64,9 @@ const AuthStepper = () => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: "20 30",
-    margin: "40 50",
+   
+    // margin: "40 50",
+    marginTop: 50,
     backgroundColor: '#fff'
   },
   stepperContainer: {
@@ -118,17 +122,25 @@ const styles = StyleSheet.create({
     color: '#9CA3AF',
   },
   connector: {
-    height: 4,
-    width: 20,
-    marginHorizontal: 8,
-    borderWidth: 1, // Temporary border for debugging
-  borderColor: 'black',
+    height: 2,
+    width: 50,
+  },
+  firstConnector: {
+    marginTop: -20,
+    marginLeft: -20,
+  },
+  secondConnector: {
+    marginTop: -20,
+    marginRight: -30
+  },
+  completedConnector: {
+    backgroundColor: '#000000',
   },
   activeConnector: {
     backgroundColor: '#000000',
   },
   inactiveConnector: {
-    backgroundColor: '#000000',
+    backgroundColor: '#D1D5DB',
   },
 });
 

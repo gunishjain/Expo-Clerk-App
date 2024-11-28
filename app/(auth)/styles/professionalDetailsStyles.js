@@ -101,6 +101,13 @@ const styles = StyleSheet.create({
     marginBottom: 16
   },
 
+  fileName: {
+    marginTop: 5,
+    marginBottom: 10,
+    fontSize: 14,
+    color: '#666',
+  },
+
 
 
  

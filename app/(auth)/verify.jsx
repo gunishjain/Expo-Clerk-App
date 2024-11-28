@@ -201,7 +201,7 @@ const verifyBothOTPs = async (data) => {
     await setActive({ session: completedSignUp.createdSessionId });
 
     // Navigate to next screen or home
-    router.replace('/home');
+    router.replace('/professional-details');
   } catch (err) {
     Alert.alert('Verification Error', err.message);
   } finally {

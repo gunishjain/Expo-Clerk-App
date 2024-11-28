@@ -11,20 +11,23 @@ import DocumentPickerComponent from '../components/DocumentPicker'
 const ProfessionalDetails = () => {
   const router = useRouter();
   const [documents, setDocuments] = useState({
-    resume: null,
-    certificate: null
+    resume: { file: null, name: '' },
+    certificate: { file: null, name: '' }
   });
 
   const handleFileSelect = (file, identifier) => {
     setDocuments(prev => ({
       ...prev,
-      [identifier]: file
+      [identifier]: {
+        file: file.uri,
+        name: file.name
+      }
     }));
-    console.log(`File received for ${identifier}:`, file);
   };
 
-
- 
+  const handleSave = () => {
+    router.replace("/(public)/home");
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -43,8 +46,9 @@ const ProfessionalDetails = () => {
         Upload Your Medical license/certificate
       </Text>
 
-      <DocumentPickerComponent onFileSelect={handleFileSelect}
-        identifier="resume"
+      <DocumentPickerComponent 
+        onFileSelect={handleFileSelect}
+        identifier="medical"
       />
 
       <Text style={styles.message}>
@@ -53,7 +57,8 @@ const ProfessionalDetails = () => {
 
       <DocumentPickerComponent 
         onFileSelect={handleFileSelect}
-        identifier="certificate"/>
+        identifier="personal"
+      />
 
       <Text style={styles.message}>
       This is an optional step. If you prefer to not upload your personal ID, our representative will reach out to you for verification. 
@@ -73,7 +78,7 @@ const ProfessionalDetails = () => {
 
           <Button
             title="Save"
-            onPress={() => router.push("login")}
+            onPress={handleSave}
             containerStyle={styles.buttonContainer}
             buttonStyle={styles.button}
             titleStyle={styles.buttonTitle}

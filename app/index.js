@@ -6,6 +6,7 @@ import React from 'react'
 
 export default function App() {
     return <Redirect href="/(auth)/login" />;
+    
 }
 
 const styles = StyleSheet.create({

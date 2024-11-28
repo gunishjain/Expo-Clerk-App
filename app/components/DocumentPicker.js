@@ -7,11 +7,17 @@ const DocumentPickerComponent = ({onFileSelect,identifier}) => {
 
   const pickDocument = async () => {
     try {
-      const result = await DocumentPicker.getDocumentAsync({});
-      if (result.type === "success") {
-        setSelectedFile(result);
-        onFileSelect(result, identifier);
-        console.log(`Selected file for ${identifier}:`, result);
+      const result = await DocumentPicker.getDocumentAsync({
+        type: '*/*'
+      });
+
+      if (!result.canceled) {
+        const fileInfo = {
+          uri: result.assets[0].uri,
+          name: result.assets[0].name
+        };
+        setSelectedFile(fileInfo);
+        onFileSelect(fileInfo, identifier);
       }
     } catch (error) {
       console.error("Error picking document:", error);
@@ -24,9 +30,12 @@ const DocumentPickerComponent = ({onFileSelect,identifier}) => {
         <TouchableOpacity style={styles.browseButton} onPress={pickDocument}>
           <Text style={styles.browseButtonText}>Browse files</Text>
         </TouchableOpacity>
-        {selectedFile && <Text style={styles.fileName}>{selectedFile.name}</Text>}
+        {selectedFile && (
+          <Text style={styles.fileName}>
+            Selected: {selectedFile.name}
+          </Text>
+        )}
       </View>
-     
     </View>
   );
 };
