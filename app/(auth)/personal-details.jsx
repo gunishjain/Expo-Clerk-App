@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, ScrollView, TextInput, TouchableOpacity } from "react-native";
+import { View, ScrollView, TextInput, TouchableOpacity , Alert} from "react-native";
 import { Button, CheckBox } from "@rneui/themed";
 import { useRouter } from "expo-router";
 import { Text } from "react-native";
@@ -11,6 +11,8 @@ import { useSignUp } from "@clerk/clerk-expo";
 import SelectDropdown from 'react-native-select-dropdown'
 import { Ionicons } from '@expo/vector-icons';
 import { useForm, Controller } from "react-hook-form";
+import axios from 'axios';
+
 
 const PersonalDetails = () => {
   const router = useRouter();
@@ -32,6 +34,98 @@ const PersonalDetails = () => {
 
   const { isLoaded, signUp, setActive } = useSignUp();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+
+  const API_USERNAME = 'Xcelotp';
+  const API_PASSWORD = '!P3Bg*1s';
+  const API_BASE_URL = 'https://sms6.rmlconnect.net';
+
+  const OTP_CONFIG = {
+    username: "Xcelotp",
+    password: "!P3Bg*1s",
+    source: "XLSRVY",
+    otplen: "6",
+    exptime: "600",
+    entityid: "1601100000000017697",
+    tempid: "1607100000000233745",
+  };
+
+  const handleOtpSend = async (phoneNumber) => {
+    let messageText =
+      "Dear User,Your OTP for Token App is %m. This is valid for 10 min, please do not share it with anyone.Team Market-Xcel";
+    if (!phoneNumber) {
+      console.error("Phone number is required");
+      return false;
+    }
+   
+    const params = {
+      ...OTP_CONFIG,
+      msisdn: phoneNumber,
+      msg: messageText,
+    };
+   
+    const queryString = new URLSearchParams(params).toString();
+   
+    try {
+      const response = await axios.get(`https://sms6.rmlconnect.net/OtpApi/otpgenerate?${queryString}`);
+      if (response.status === 200) {
+        return true;
+      } else {
+        console.error("Failed to send OTP");
+        return false;
+      }
+    } catch (error) {
+      console.error("Error sending OTP:", error.message || error);
+      return false;
+    }
+  };
+
+  const sendPhoneOTP = async (phoneNumber) => {
+    try {
+
+
+      const messageParts = [
+        'Dear User, Your OTP for Token App is ',
+        '%m',  // Keep this exactly as %m
+        '. This is valid for 10 min, please do not share it with anyone. Team Market-Xcel'
+      ];
+      
+      const messageTemplate = messageParts.map((part, index) => 
+        index === 1 ? part : encodeURIComponent(part)
+      ).join('');
+  
+      console.log('Message being sent:', messageTemplate);
+      
+      const response = await axios.get(`${API_BASE_URL}/OtpApi/otpgenerate`, {
+        params: {
+          username: API_USERNAME,
+          password: API_PASSWORD,
+          msisdn: phoneNumber, // Remove '+' from phone number
+          msg: messageTemplate,
+          source: 'XLSRVY',
+          otplen: 6,
+          exptime: 600 // 5 minutes expiration
+        }
+      });
+
+      if (response && response.data) {
+        console.log('OTP API Response:', response.data); // For debugging
+        
+        // Convert response to string if it isn't already
+        const responseStr = String(response.data);
+        
+        // Check if response starts with '1701'
+        // This will match successful responses like "1701|MSISDN:MessageID"
+        return responseStr.startsWith('1701');
+      }
+      return false;
+    } catch (err) {
+      console.error('Error sending phone OTP:', err);
+      console.error('Error response:', err.response?.data);
+      return false;
+    }
+  };
 
 
   const clerkSubmit = async (data) => {
@@ -40,7 +134,26 @@ const PersonalDetails = () => {
       return;
     }
 
+    setLoading(true);
+
+
     try {
+
+
+      // Prepare full phone number with country code
+      const fullPhoneNumber = data.phone;
+
+      // First, try to send phone OTP
+      const isPhoneOTPSent = await handleOtpSend(fullPhoneNumber);
+
+      if (!isPhoneOTPSent) {
+        Alert.alert('OTP Error', 'Failed to send phone OTP. Please try again.');
+        setLoading(false);
+        return;
+      }
+
+
+
       // Start the sign up process
       const signUpAttempt = await signUp.create({
         emailAddress: data.email,
@@ -60,11 +173,15 @@ const PersonalDetails = () => {
           });
         } catch (err) {
           console.error("Error during sign up:", err.message);
-          // Handle error appropriately
+          Alert.alert('Registration Error', err.message);
+        } finally {
+          setLoading(false);
         }
+      };
 
 
-  }
+
+  
 
 
   return (
@@ -370,6 +487,8 @@ const PersonalDetails = () => {
           })}
           containerStyle={styles.buttonContainer}
           buttonStyle={styles.button}
+          loading={loading}
+          disabled={loading}
         />
       </View>
     </ScrollView>
