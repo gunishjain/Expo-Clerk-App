@@ -481,9 +481,12 @@ const PersonalDetails = () => {
         <Button
           title="Register"
           onPress={handleSubmit((data) => {
+            if (!data.termsAccepted) {
+              Alert.alert('Error', 'Please accept the terms and conditions to continue');
+              return;
+            }
             console.log('Form Data:', data);
-            clerkSubmit(data)
-            // router.push("verify");
+            clerkSubmit(data);
           })}
           containerStyle={styles.buttonContainer}
           buttonStyle={styles.button}

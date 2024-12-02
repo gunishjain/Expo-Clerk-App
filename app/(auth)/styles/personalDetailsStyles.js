@@ -111,21 +111,13 @@ const styles = StyleSheet.create({
 
   toc: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'spaced-evenly',
     marginBottom: 16,
     padding: 10
   },
 
-
-  checkbox: {
-    backgroundColor: "transparent",
-    borderWidth: 0,
-    padding: 0,
-    margin: 0,
-    marginBottom: 16,
-  },
   checkboxText: {
-    fontSize: 14,
+    fontSize: 18,
     color: "black",
     fontWeight: "normal",
     

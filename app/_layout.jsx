@@ -42,30 +42,37 @@ const InitialLayout = () => {
 
 	
 	useEffect(() => {
-		if (!isLoaded) return;
 
-    const inAuthGroup = segments[0] === '(auth)';
-    const inPublicGroup = segments[0] === '(public)';
-    const isVerifyPage = segments.includes('verify');
-    const isProfessionalDetailsPage = segments.includes('professional-details');
-    const isHomePage = segments.includes('home');
+    //FOR TESTING ONLY
+    return;
 
-    console.log('Auth state:', { isSignedIn, inAuthGroup, inPublicGroup, isVerifyPage, segments });
+    if (!isLoaded) return;
 
-    if (isSignedIn) {
-      if (isVerifyPage) {
-        // After verification, route to professional details
-        router.replace('/(auth)/professional-details');
-      } else if (!isProfessionalDetailsPage && !inPublicGroup && !isHomePage) {
-        // Only route to professional-details if not already there, not in public group, and not on home page
-        router.replace('/(auth)/professional-details');
-      }
-    } else {
-      // If not signed in and not already in login/register
-      if (!inAuthGroup && segments[0] !== 'register') {
-        router.replace('/login');
-      }
-    }
+
+		// if (!isLoaded) return;
+
+    // const inAuthGroup = segments[0] === '(auth)';
+    // const inPublicGroup = segments[0] === '(public)';
+    // const isVerifyPage = segments.includes('verify');
+    // const isProfessionalDetailsPage = segments.includes('professional-details');
+    // const isHomePage = segments.includes('home');
+
+    // console.log('Auth state:', { isSignedIn, inAuthGroup, inPublicGroup, isVerifyPage, segments });
+
+    // if (isSignedIn) {
+    //   if (isVerifyPage) {
+    //     // After verification, route to professional details
+    //     router.replace('/(auth)/professional-details');
+    //   } else if (!isProfessionalDetailsPage && !inPublicGroup && !isHomePage) {
+    //     // Only route to professional-details if not already there, not in public group, and not on home page
+    //     router.replace('/(auth)/professional-details');
+    //   }
+    // } else {
+    //   // If not signed in and not already in login/register
+    //   if (!inAuthGroup && segments[0] !== 'register') {
+    //     router.replace('/login');
+    //   }
+    // }
   }, [isSignedIn, isLoaded, segments]);
 
 
@@ -81,6 +88,7 @@ const RootLayout = () => {
 
 
   return (
+
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
 
         <InitialLayout />

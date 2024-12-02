@@ -4,7 +4,7 @@
     "slug": "xcel-med-connect",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "",
+    "icon": "./assets/iconshealth.png",
     "scheme": "xcel-med-connect",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -14,9 +14,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/iconshealth.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.xcelmedconnect"
     },
     "web": {
       "bundler": "metro",
@@ -28,7 +29,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/iconshealth.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"

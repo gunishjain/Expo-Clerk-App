@@ -1,11 +1,14 @@
 import { View, StyleSheet } from 'react-native'
-import { Text } from 'react-native-paper'
 import { Link , Redirect } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import React from 'react'
+import ProfileTest from './(public)/profileTest'; 
+
+
 
 export default function App() {
-    return <Redirect href="/(auth)/login" />;
+  return  <ProfileTest />;
+  
     
 }
 
