@@ -2,6 +2,7 @@ import { Slot, useSegments, useRouter} from 'expo-router'
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import * as SecureStore from 'expo-secure-store'
 import React, { useEffect } from "react";
+import { SafeAreaView } from 'react-native';
 import "../global.css";
 
 // SplashScreen.preventAutoHideAsync();
@@ -88,11 +89,12 @@ const RootLayout = () => {
 
 
   return (
+    
+      <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
 
-    <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-
-        <InitialLayout />
-    </ClerkProvider>
+          <InitialLayout />
+      </ClerkProvider>
+  
   )
 }
 

@@ -1,8 +1,5 @@
 import { View, StyleSheet } from 'react-native'
 import { Link , Redirect } from 'expo-router'
-import { StatusBar } from 'expo-status-bar'
-import React from 'react'
-import ProfileTest from './(public)/profileTest'; 
 
 
 

@@ -1,5 +1,7 @@
 import { View, Text } from 'react-native'
 import { Stack,usePathname } from 'expo-router'
+import { SafeAreaView } from 'react-native';
+
 
 import React from 'react'
 import AuthStepper from '../components/AuthStepper';
@@ -8,10 +10,13 @@ import AuthStepper from '../components/AuthStepper';
 const AuthLayout = () => {
 
   const pathname = usePathname();
-  const isLoginScreen = pathname === '/login';
+  const hideStepperRoutes = ['/login', '/forgotpass'];
+  const shouldHideAuthStepper = hideStepperRoutes.includes(pathname);
+
+
   return (
     <>
-    {!isLoginScreen && <AuthStepper/>}
+    {!shouldHideAuthStepper && <AuthStepper />}    
     <Stack>
 
         <Stack.Screen

@@ -1,22 +1,18 @@
-import { Stack,useRouter } from 'expo-router'
+import 'react-native-gesture-handler'
+import { useNavigation,useRouter } from 'expo-router'
 import { useAuth } from '@clerk/clerk-expo';
 import { Pressable } from 'react-native';
 import { useEffect } from 'react';
 import { Drawer } from 'expo-router/drawer';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react'
-import {
-  useNavigation,
-} from '@react-navigation/native';
-
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
 const HomeLayout = () => {
 
   const { isSignedIn, isLoaded } = useAuth();
   const router = useRouter();
-  const navigation = useNavigation();
-
 
 
   useEffect(() => {
@@ -26,7 +22,7 @@ const HomeLayout = () => {
   }, [isSignedIn, isLoaded]);
 
   return (
-    <>
+    <GestureHandlerRootView style={{flex: 1}}>
     <Drawer
          screenOptions={{
           headerShown: true,
@@ -43,6 +39,8 @@ const HomeLayout = () => {
           headerRight: ({ tintColor }) => (
             <Pressable
               onPress={() => {
+
+
               }}
               style={{ marginRight: 10 }}
             >
@@ -53,16 +51,30 @@ const HomeLayout = () => {
           headerLeft: () => null,
         }}
     >
-      <Stack>
-        <Stack.Screen
+     
+        <Drawer.Screen
           name="dashboard"
           options={{
-            headerShown: false
+            drawerLabel: 'DashBoard'
           }}
         />
-      </Stack>
+
+        <Drawer.Screen
+          name="profile"
+          options={{
+            drawerLabel: 'Profile'
+          }}
+        />
+
+        <Drawer.Screen
+          name="accountSetting"
+          options={{
+            drawerLabel: 'Account Settings'
+          }}
+        />
+   
     </Drawer>
-    </>
+    </GestureHandlerRootView>
   )
 }
 

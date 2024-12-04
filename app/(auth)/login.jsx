@@ -8,6 +8,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useSignIn } from '@clerk/clerk-expo';
 
 
+
 const Login = () => {
   const router = useRouter();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -111,7 +112,7 @@ const Login = () => {
           )}
         />
 
-        <TouchableOpacity onPress={() => router.push("/forgot-password")}>
+        <TouchableOpacity onPress={() => router.push("/forgotpass")}>
           <Text style={styles.forgotPassword}>Forgot Password?</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => router.push("/personal-details")}>
