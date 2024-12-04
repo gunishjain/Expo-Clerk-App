@@ -3,15 +3,44 @@ import { View, Text, Button, ScrollView } from 'react-native';
 import Card from '../components/Card.js';
 import StatsCard from '../components/StatsCard.js';
 import ProfileCard from '../components/ProfileCard.js';
+import { useRouter } from "expo-router";
+import {  useAuth, useUser } from '@clerk/clerk-expo';
+import { SafeAreaView } from 'react-native';
+
 
 import styles from './styles/dashboardStyle.js'
 
-const BalanceScreen = () => {
+const DashBoard = () => {
+
+  const router = useRouter();
+  const { signOut } = useAuth();
+  const { user } = useUser();
+
+  const handleLogout = async () => {
+   
+    try {
+        await signOut();
+        router.replace('/login');
+      } catch (error) {
+        console.error('Error signing out:', error);
+      }
+  };
+
+  const userEmail = user?.emailAddresses?.[0]?.emailAddress || 'Guest';
+
+
+
   return (
+    <SafeAreaView>
     <ScrollView>
       <View style={styles.container}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.greetingText}>Hey, {userEmail}</Text>
+          <Text onPress={handleLogout} style={styles.logoutButton}>
+            Logout
+          </Text>
+        </View>
 
-     
         <View style={[styles.statsContainer, { gap: 16 }]}>
 
         <StatsCard 
@@ -32,9 +61,6 @@ const BalanceScreen = () => {
         </View>
 
         
-
-
-
         <View style={styles.profileCardContainer}>
           <ProfileCard
             percentage={50}
@@ -75,8 +101,9 @@ const BalanceScreen = () => {
         </View>
       </View>
     </ScrollView>
+    </SafeAreaView>
   );
 };
 
 
-export default BalanceScreen;
+export default DashBoard;

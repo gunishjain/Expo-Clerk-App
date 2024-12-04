@@ -7,18 +7,17 @@ const ProgressBar = ({ percentage }) => {
     <View style={styles.container}>
       <CircularProgress
         value={percentage}
-        radius={25}
-        duration={2000}
-        progressValueColor={'#4285F4'}
+        radius={45}
+        duration={500}
+        activeStrokeColor='#39608F'
+        inActiveStrokeColor='#E8E8E8'
         maxValue={100}
-        title={''}
-        titleColor={'black'}
-        titleStyle={{ fontWeight: 'bold' }}
-        progressValueStyle={{ fontSize: 14 }}
+        valueSuffix={'%'}
         activeStrokeWidth={6}
         inActiveStrokeWidth={6}
-        titleFontSize={20}
-        progressValueFontSize={14}
+        progressValueColor='#000000'
+        progressValueStyle={{fontWeight:'400'}}
+        progressValueFontSize='17.5'
       />
     </View>
   );
@@ -30,6 +29,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'transparent',
     marginLeft: 10,
+    marginRight:10,
+    marginTop: 30
+
   },
 });
 

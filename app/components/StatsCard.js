@@ -9,7 +9,7 @@ const StatsCard = ({
   iconColor = '#4285F4'
 }) => {
   return (
-    <View className="bg-white p-4 rounded-xl shadow-lg flex-row items-center justify-between w-full h-full">
+    <View className="bg-white p-4 rounded-xl shadow-sm flex-row items-center justify-between w-full h-full">
       <View>
         <Text className="text-2xl font-bold text-black">{number}</Text>
         <Text className="text-gray-600 text-sm">{label}</Text>

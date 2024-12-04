@@ -1,11 +1,11 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
-import BalanceScreen from './profile'; // Import the component you want to test
+import DashBoard from './dashboard'; // Import the component you want to test
 
 const ProfileTest = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <BalanceScreen />
+      <DashBoard />
     </SafeAreaView>
   );
 };

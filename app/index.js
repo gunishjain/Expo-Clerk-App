@@ -7,7 +7,7 @@ import ProfileTest from './(public)/profileTest';
 
 
 export default function App() {
-  return  <ProfileTest />;
+  
   
     
 }

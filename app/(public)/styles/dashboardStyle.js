@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
   statsContainer: {
     alignItems: 'center',
     height: '5%',
+    marginBottom: 25
     
   },
 
@@ -28,7 +29,27 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 
- 
+  logoutButton: {
+
+    backgroundColor: '#ff4444',
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    marginTop: 20,
+
+  },
+
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+  },
+
+  greetingText: {
+    fontSize: 16,
+    fontWeight: '500',
+  },
+
     
   });
 

@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   flRow: {
     flexDirection: "row",
     marginBottom: 16,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     
   },
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: "#dcdcdc",
     height: 40,
-    width: 100,
+    width: '100%',
     borderRadius: 8,
   },
 

@@ -13,7 +13,7 @@ const Card = ({
   timeIcon = 'time-outline',
 }) => {
   return (
-    <View className="bg-white p-6 rounded-xl shadow-lg w-full h-48 mx-auto my-4">
+    <View className="bg-white p-6 rounded-xl shadow-sm w-full h-48 mx-auto my-2">
       {/* Disqualification Banner */}
       {disqualificationText && (
         <View className={`flex-row items-center p-2 rounded-lg mb-4 ${disqualificationBgColor}`}>

@@ -26,7 +26,7 @@ const ProfessionalDetails = () => {
   };
 
   const handleSave = () => {
-    router.replace("/(public)/home");
+    router.replace("/(public)/dashboard");
   };
 
   return (
@@ -68,13 +68,13 @@ const ProfessionalDetails = () => {
 
         <View style={styles.flRow}>
 
-          <Button
+          {/* <Button
             title="Back"
             onPress={() => router.back()}
             containerStyle={styles.buttonContainer}
             buttonStyle={styles.button}
             titleStyle={styles.buttonTitle}
-          />
+          /> */}
 
           <Button
             title="Save"

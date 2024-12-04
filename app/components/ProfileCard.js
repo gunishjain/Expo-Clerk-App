@@ -81,10 +81,11 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   completeProfileLink: {
-    color: '#4285F4',
+    color: '#2A6A9D',
     fontSize: 16,
     fontWeight: '500',
     marginBottom: 24,
+    marginLeft: 110
   },
   questionSection: {
     marginTop: 8,

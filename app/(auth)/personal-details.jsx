@@ -399,7 +399,25 @@ const PersonalDetails = () => {
         <Controller
           control={control}
           name="dob"
-          rules={{ required: "Date of birth is required" }}
+          rules={{ 
+            required: "Date of birth is required",
+            validate: (value) => {
+              // Parse the date string (DD/MM/YYYY format)
+              const [day, month, year] = value.split('/');
+              const dob = new Date(year, month - 1, day);
+              
+              // Calculate age
+              const today = new Date();
+              let age = today.getFullYear() - dob.getFullYear();
+              const monthDiff = today.getMonth() - dob.getMonth();
+              
+              if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+                age--;
+              }
+              
+              return age >= 18 || "You must be 18 or older to register";
+            }
+          }}
           render={({ field: { onChange } }) => (
             <DatePickerField
               label="Date of Birth (DD/MM/YYYY)"
