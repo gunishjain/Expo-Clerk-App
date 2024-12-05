@@ -8,7 +8,7 @@ import "../global.css";
 // SplashScreen.preventAutoHideAsync();
 
 
-const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+const publishableKey =process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
 const tokenCache = {
   async getToken(key) {
