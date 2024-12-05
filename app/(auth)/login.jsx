@@ -6,6 +6,7 @@ import styles from "./styles/loginStyle";
 import { Ionicons } from '@expo/vector-icons';
 import { useForm, Controller } from 'react-hook-form';
 import { useSignIn } from '@clerk/clerk-expo';
+import { SafeAreaView } from "react-native-safe-area-context";
 
 
 
@@ -47,6 +48,7 @@ const Login = () => {
   };
 
   return (
+    <SafeAreaView>
     <View style={styles.container}>        
       <View style={styles.formContainer}>
         <Text style={styles.heading}>Login</Text>
@@ -127,6 +129,7 @@ const Login = () => {
         />
       </View>
     </View>
+    </SafeAreaView>
   );
 };
 

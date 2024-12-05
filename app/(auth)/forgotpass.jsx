@@ -3,9 +3,8 @@ import { View, TextInput, TouchableOpacity, Text,Alert } from "react-native";
 import { Button } from "@rneui/themed";
 import { useRouter } from "expo-router";
 import { Stack } from 'expo-router';
-
+import { Ionicons } from '@expo/vector-icons';
 import styles from "./styles/forgotPassStyle";
-
 import { useSignIn } from '@clerk/clerk-expo';
 
 
@@ -18,6 +17,8 @@ const [code, setCode] = useState('');
 const [successfulCreation, setSuccessfulCreation] = useState(false);
 const { signIn, setActive } = useSignIn();
 const router = useRouter();
+const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
 
 
 // Request a passowrd reset code by email
@@ -79,7 +80,32 @@ return (
       <>
         <View>
           <TextInput value={code} placeholder="Code..." style={styles.inputTextField} onChangeText={setCode} />
-          <TextInput placeholder="New password" value={password} onChangeText={setPassword} secureTextEntry style={styles.inputTextField} />
+
+
+          {/* <TextInput placeholder="New password" value={password} onChangeText={setPassword} secureTextEntry style={styles.inputTextField} /> */}
+
+          <View style={styles.inputContainer}>
+                <TextInput
+                  placeholder="New Password"
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry={!isPasswordVisible}
+                  style={styles.inputPassField}
+                />
+                <TouchableOpacity
+                  onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+                  style={styles.iconContainer}
+                >
+                  <Ionicons
+                    name={isPasswordVisible ? 'eye' : 'eye-off'}
+                    size={24}
+                    color="gray"
+                  />
+                </TouchableOpacity>
+          </View>
+
+
+
         </View>
         <Button onPress={onReset} title="Set new Password" color={'#6c47ff'}></Button>
       </>
