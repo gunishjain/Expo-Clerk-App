@@ -3,16 +3,44 @@ import { useNavigation,useRouter } from 'expo-router'
 import { useAuth } from '@clerk/clerk-expo';
 import { Pressable } from 'react-native';
 import { useEffect } from 'react';
-import { Drawer } from 'expo-router/drawer';
+import { createDrawerNavigator, DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+ } from '@react-navigation/drawer';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import DashBoard from './dashboard';
+import Profile from './profile';
+import AccountSetting from './accountSetting'
+
+const Drawer = createDrawerNavigator();
 
 
 const HomeLayout = () => {
 
-  const { isSignedIn, isLoaded } = useAuth();
+  const { isSignedIn, isLoaded ,signOut} = useAuth();
   const router = useRouter();
+
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      router.replace('/login'); // Redirect to login after logout
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+  
+
+  function CustomDrawerContent(props) {
+    return (
+      <DrawerContentScrollView {...props}>
+        <DrawerItemList {...props} />
+        <DrawerItem label="Logout" onPress={handleLogout} />
+      </DrawerContentScrollView>
+    );
+  }
 
 
   useEffect(() => {
@@ -23,57 +51,29 @@ const HomeLayout = () => {
 
   return (
     <GestureHandlerRootView style={{flex: 1}}>
-    <Drawer
-         screenOptions={{
+    <Drawer.Navigator
+        drawerContent={props => <CustomDrawerContent {...props} />}
+        screenOptions={({ navigation }) => ({
           headerShown: true,
-          headerTitle: 'Xcel Med Connect', // Title in the header
-          drawerPosition: 'right', // Drawer opens from the right
+          headerTitle: 'Xcel Med Connect',
+          drawerPosition: 'right',
           drawerStyle: {
-            backgroundColor: '#f4f4f4', // Drawer background color
-            width: 240, // Drawer width
+            backgroundColor: '#f4f4f4',
+            width: 240,
           },
-          drawerLabelStyle: {
-            fontSize: 16, 
-            color: '#333', 
-          },
-          headerRight: ({ tintColor }) => (
-            <Pressable
-              onPress={() => {
-
-
-              }}
-              style={{ marginRight: 10 }}
-            >
-              <Ionicons name="menu" size={24} color={tintColor || '#333'} />
+          headerRight: () => (
+            <Pressable onPress={() => navigation.openDrawer()} style={{ marginRight: 10 }}>
+              <Ionicons name="menu" size={24} color="#333" />
             </Pressable>
           ),
-         
           headerLeft: () => null,
-        }}
-    >
-     
-        <Drawer.Screen
-          name="dashboard"
-          options={{
-            drawerLabel: 'DashBoard'
-          }}
-        />
-
-        <Drawer.Screen
-          name="profile"
-          options={{
-            drawerLabel: 'Profile'
-          }}
-        />
-
-        <Drawer.Screen
-          name="accountSetting"
-          options={{
-            drawerLabel: 'Account Settings'
-          }}
-        />
-   
-    </Drawer>
+        })}
+      >
+        <Drawer.Screen name="Dashboard" component={DashBoard} />
+        <Drawer.Screen name="Profile" component={Profile} />
+        <Drawer.Screen name="AccountSettings" component={AccountSetting} />
+        
+      </Drawer.Navigator>
     </GestureHandlerRootView>
   )
 }

@@ -17,7 +17,7 @@ const ProgressBar = ({ percentage }) => {
         inActiveStrokeWidth={6}
         progressValueColor='#000000'
         progressValueStyle={{fontWeight:'400'}}
-        progressValueFontSize='17.5'
+        progressValueFontSize={17.5}
       />
     </View>
   );

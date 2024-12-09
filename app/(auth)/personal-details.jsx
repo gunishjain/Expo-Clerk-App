@@ -270,7 +270,7 @@ const PersonalDetails = () => {
             )}
           />
         </View>
-        {errors.phone && <Text style={styles.errorText}>{errors.phone.message}</Text>}
+        {errors.phone && <Text style={styles.phoneError}>{errors.phone.message}</Text>}
 
         <View style={styles.inputContainer}>
           <Controller
@@ -335,7 +335,7 @@ const PersonalDetails = () => {
           />
         </View>
         {errors.firstName && <Text style={styles.errorText}>{errors.firstName.message}</Text>}
-        {errors.lastName && <Text style={styles.errorText}>{errors.lastName.message}</Text>}
+        {errors.lastName && <Text style={styles.lastNameError}>{errors.lastName.message}</Text>}
 
         <View style={styles.flRow}>
           <Controller
@@ -394,7 +394,7 @@ const PersonalDetails = () => {
           />
         </View>
         {errors.gender && <Text style={styles.errorText}>{errors.gender.message}</Text>}
-        {errors.zipcode && <Text style={styles.errorText}>{errors.zipcode.message}</Text>}
+        {errors.zipcode && <Text style={styles.zipcodeError}>{errors.zipcode.message}</Text>}
 
         <Controller
           control={control}
@@ -472,7 +472,7 @@ const PersonalDetails = () => {
             />
           )}
         />
-        {errors.profession && <Text style={styles.errorText}>{errors.profession.message}</Text>}
+        {errors.profession && <Text style={styles.professionError}>{errors.profession.message}</Text>}
 
         <View style={styles.toc}>
           <Controller

@@ -70,6 +70,40 @@ const styles = StyleSheet.create({
     flex: 1,  
   },
 
+  lastNameError: {
+
+    color: 'red',
+    fontSize: 12,
+    marginLeft: '54%',
+    marginTop: -25,
+    marginBottom: 10,
+
+  },
+
+  zipcodeError: {
+    color: 'red',
+    fontSize: 12,
+    marginLeft: '54%',
+    marginTop: -25,
+    marginBottom: 10,
+  },
+
+  phoneError: {
+    color: 'red',
+    fontSize: 12,
+    marginLeft: '26%',
+    marginTop: -15,
+    marginBottom: 10,
+  },
+
+  professionError: {
+    color: 'red',
+    fontSize: 12,
+    marginLeft: 10,
+    marginTop: 2,
+    marginBottom: 10,
+  },
+
   genderPicker: {
 
     flexDirection: 'row',
